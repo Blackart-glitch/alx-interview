@@ -5,13 +5,17 @@
 
 
 def canUnlockAll(boxes):
-    n = len(boxes)
-    unlocked = set()
-    unlocked.add(0)  # Start with the first box (index 0) unlocked
+    """Determines if boxes can be unlocked"""
+    position = 0
+    unlocked = {}
 
-    for box_index in unlocked:
-        for key in boxes[box_index]:
-            if 0 <= key < n and key not in unlocked:
-                unlocked.add(key)
-
-    return len(unlocked) == n
+    for box in boxes:
+        if len(box) == 0 or position == 0:
+            unlocked[position] = "always_unlocked"
+        for key in box:
+            if key < len(boxes) and key != position:
+                unlocked[key] = key
+        if len(unlocked) == len(boxes):
+            return True
+        position += 1
+    return False
